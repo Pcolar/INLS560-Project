@@ -6,6 +6,7 @@ from datetime import datetime
 parse_OCR_file
 
 Input: 	filename to be parsed
+	output CSV filename
 	# of lines to be parsed
 
 Parse the input file for #lines 
