@@ -10,7 +10,7 @@ Input: 	filename to be parsed
 	# of lines to be parsed
 
 Parse the input file for #lines 
-using the regex expressions, search input for Volume Number Page and Date
+using the regex expressions, search input for Volume Number, Page, and Date
 write result to CSV file when all variables found or #lines reached
 
 '''
