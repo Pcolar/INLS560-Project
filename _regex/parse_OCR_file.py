@@ -35,8 +35,8 @@ date_string = ""
 volume_string = ""
 issue_string = ""
 page_string = ""
-volume = re.compile("(Volume|Vol)\s(\w+|\d+)", re.IGNORECASE)
-number = re.compile("(number|num|no)\s\d+", re.IGNORECASE)
+volume = re.compile("(Volume|Vol.)\s(\w+|\d+)", re.IGNORECASE)
+number = re.compile("(number|num.|no.)\s\d+", re.IGNORECASE)
 pdate  = re.compile("(January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sep|October|Oct|November|Nov|December|Dec)\s\d+,\s\d+", re.IGNORECASE)
 pageno = re.compile("(PAGE|PG)\s*(\w+|\d+)", re.IGNORECASE)
 string_value = re.compile("(\w+|\d+)$")
@@ -59,6 +59,7 @@ with open(filename) as OCR_File:
 		raw_substring = line[issue_number.start():issue_number.end()]
 		found_value = string_value.search(raw_substring)
 		issue_string = raw_substring[found_value.start():found_value.end()]
+		print "issue: ", issue_string
 	found_date = pdate.search(line)
 	if (found_date):
 		print "Date found: ", found_date.span(), ":", line[found_date.start():found_date.end()]
@@ -72,16 +73,20 @@ with open(filename) as OCR_File:
 		raw_substring = line[found_pageno.start():found_pageno.end()]
 		found_value = string_value.search(raw_substring)
 		page_string = raw_substring[found_value.start():found_value.end()]
-	if ((found_volume and issue_number and found_date) or (line_count >= Parse_limit)):
+	if ((found_volume and issue_number and found_date and found_pageno) or (line_count >= Parse_limit)):
 		break
 
+#if ((found_volume) or (issue_number) or (found_date) or (found_pageno)):
+print "format: filename, date, volume, issue, page"
 output_line =  double_quote + filename + double_quote + ","
 output_line += double_quote + date_string + double_quote + "," 
 output_line += double_quote + volume_string + double_quote + "," 
 output_line += double_quote + issue_string + double_quote + ","
 output_line += double_quote + page_string + double_quote
-
 print "output: ", output_line 
+#else:
+#	print "No data found!"
+
 #csv_file = open(outfilename, 'a')
 #csv_file.write(output_line)
 #csv_file.close()
