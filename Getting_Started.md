@@ -13,7 +13,7 @@ The current solution at our institution is:
 
 This process is expensive, time consuming, and error prone.
 
-This is project makes some inroads towards automating the metadata harvesting process.
+This project makes some inroads towards automating the metadata harvesting process.
 It's a bit rough around the edges, but open to improvement as a community effort.
 
 ## Requirements
@@ -41,7 +41,7 @@ It's a bit rough around the edges, but open to improvement as a community effort
 
 * Running the program
   * _scripts/parse_OCR_file.py
-    * accepts a list of files to STDIN to be processed (more on this later)
+    * accepts a list of files to STDIN to be processed (*needs more definition*)
     * obtains startup information from shell variables
         * Parse_Limit - # of lines in the input file to parse for metadata
         * CSV_output_file - filename of the spreadsheet file produced by the program 
