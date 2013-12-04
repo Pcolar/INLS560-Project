@@ -1,4 +1,4 @@
-INLS560-Project
+OCR-Parser
 ===============
 
 ##Purpose
