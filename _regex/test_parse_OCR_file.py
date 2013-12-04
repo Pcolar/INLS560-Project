@@ -13,16 +13,34 @@ write result to CSV file when all variables found or #lines reached
 
 '''
 
+def extract_rightmost_string(raw_string):
+	string_value = re.compile("(\w+|\d+)$")
+	found_value = string_value.search(raw_string)
+	return raw_string[found_value.start():found_value.end()]
+
 def find_volume(line):
         volume = re.compile("(Volume|Vol.)\s(\w+|\d+)", re.IGNORECASE)
-        string_value = re.compile("(\w+|\d+)$")
         found_volume = volume.search(line)
         if (found_volume):
-                raw_substring = line[found_volume.start():found_volume.end()]
-                found_value = string_value.search(raw_substring)
-                volume_string = raw_substring[found_value.start():found_value.end()]
-                return volume_string
+		return extract_rightmost_string(line[found_volume.start():found_volume.end()])
 
+def find_issue(line):
+	number = re.compile("(number|num.|no.)\s\d+", re.IGNORECASE)
+        issue_number = number.search(line)
+        if (issue_number):
+                return extract_rightmost_string(line[issue_number.start():issue_number.end()])
+
+def find_date(line):
+	pdate  = re.compile("(January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sep|October|Oct|November|Nov|December|Dec)\s\d+,\s\d+", re.IGNORECASE)
+        found_date = pdate.search(line)
+        if (found_date):
+		return line[found_date.start():found_date.end()]
+
+def find_pageno(line):
+	pageno = re.compile("(PAGE|PG)\s*(\w+|\d+)", re.IGNORECASE)
+	found_pageno = pageno.search(line)
+	if (found_pageno):
+		return extract_rightmost_string(line[found_pageno.start():found_pageno.end()])
 
 def import_value(var_name):
         return os.environ[var_name]  
@@ -43,15 +61,10 @@ print filename
 
 line_count = 0
 double_quote = "\""
-date_string = ""  
+date_string = None
 volume_string = None
-issue_string = ""
-page_string = ""
-volume = re.compile("(Volume|Vol.)\s(\w+|\d+)", re.IGNORECASE)
-number = re.compile("(number|num.|no.)\s\d+", re.IGNORECASE)
-pdate  = re.compile("(January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sep|October|Oct|November|Nov|December|Dec)\s\d+,\s\d+", re.IGNORECASE)
-pageno = re.compile("(PAGE|PG)\s*(\w+|\d+)", re.IGNORECASE)
-string_value = re.compile("(\w+|\d+)$")
+issue_string = None
+page_string = None
 
 # start Main
 
@@ -59,41 +72,25 @@ with open(filename) as OCR_File:
     for line in OCR_File:
 	line_count += 1
 	# search through the line for the strings
-#	volume_string = find_volume(line)
-#	if (found_volume):
-#		print "Volume found:", found_volume.span(), ":", line[found_volume.start():found_volume.end()]
-#		raw_substring = line[found_volume.start():found_volume.end()]
-#		found_value = string_value.search(raw_substring)
-#		volume_string = raw_substring[found_value.start():found_value.end()]
-#	print "Volume: ", volume_string 
         if  (volume_string is None):
                 volume_string = find_volume(line)
-                print "Volume: ", volume_string 
-	issue_number = number.search(line)
-	if (issue_number):
-		print "Issue found:", issue_number.span(), ":", line[issue_number.start():issue_number.end()]
-		raw_substring = line[issue_number.start():issue_number.end()]
-		found_value = string_value.search(raw_substring)
-		issue_string = raw_substring[found_value.start():found_value.end()]
-		print "issue: ", issue_string
-	found_date = pdate.search(line)
-	if (found_date):
-		print "Date found: ", found_date.span(), ":", line[found_date.start():found_date.end()]
-		date_string = line[found_date.start():found_date.end()]
-#		raw_date = line[found_date.start():found_date.end()]
-#		date_object = datetime.strptime( raw_date, '%B %m, %Y')
-#		print "formatted date: ", date_object
-        found_pageno = pageno.search(line)
-	if (found_pageno):
-		print "Page found: ", found_pageno.span(), ":", line[found_pageno.start():found_pageno.end()]
-		raw_substring = line[found_pageno.start():found_pageno.end()]
-		found_value = string_value.search(raw_substring)
-		page_string = raw_substring[found_value.start():found_value.end()]
-#	if ((found_volume and issue_number and found_date and found_pageno) or 
+#                print "Volume: ", volume_string 
+	if (issue_string is None):
+		issue_string = find_issue(line)
+#		print "issue: ", issue_string
+	if (date_string is None):
+		date_string = find_date(line)
+#		print "Date found: ", date_string
+	if (page_string is None):
+		page_string = find_pageno(line)
+#		print "Page found: ", page_string
 	if (line_count >= Parse_Limit):
 		break
 
+# Write output to the CSV file
 csv_writer.writerow((filename, date_string, volume_string, issue_string, page_string))
 OCR_File.close()
 CSV_File.close()
+
+
 exit()
