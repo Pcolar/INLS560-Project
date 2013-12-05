@@ -49,4 +49,4 @@ It's a bit rough around the edges, but open to improvement as a community effort
   *  _scripts / run_parse_OCR.sh
     * sets up the environment and runs the program
     * needs to be tweaked for your environment
-
+    * chmod +x run_parse_OCR.sh (to permit execution of the script)
