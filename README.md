@@ -11,11 +11,12 @@ Our goal with this project to automate certain aspects of the digitization workf
 
 All code and instructions will be available from this github repository.  
 
-Full documentation will be up sometime in December.
+For information on how to get started with usage, please see our [Getting Started](Getting_Started.md).
 
 ##Contributing
 
-Once the intital project is realized, we'd love to have contributors help continue to automate the workflow.  Other automatoin steps can include automatically OCRing the text as well as pulling more metadata from the files.
+Once the intital project is realized, we'd love to have contributors help continue to automate the workflow.  
+Please see our [Contributing Guidelines](CONTRIBUTING.md) for more information.
 
 ##Contributors
 
