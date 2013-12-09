@@ -24,5 +24,5 @@ This project is maintained by Amber Sherman, Dave Pcolar, and Elizabeth Peele.
 
 ##License
 
-Provided under an MIT License.  See LICENSE.md.
+Provided under an [MIT License](LICENSE.md).
 
