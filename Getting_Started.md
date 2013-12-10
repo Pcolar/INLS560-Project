@@ -2,20 +2,6 @@ Getting Started
 OCR-Parser
 ===============
 
-##Purpose
-
-Outsourcing page level digitization is a cost effective strategy, but results in missing or error prone metadata for the images returned from the vendor.
-The current solution at our institution is:
-* Create a template spreadsheet
-* Copy and fill revelant series or reel metadata
-* Open each image and manually extract metadata
-* Manually enter the data into the spreadsheet 
-
-This process is expensive, time consuming, and error prone.
-
-This project makes some inroads towards automating the metadata harvesting process.
-It's a bit rough around the edges, but open to improvement as a community effort.
-
 ## Requirements
 
 * command line (shell) access 
