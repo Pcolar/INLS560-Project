@@ -44,7 +44,7 @@ OCR-Parser
   
   You should see all of the text files processing like this
   
-  ![Processing](www.unc.edu/~epeele/file/parser_processing.png)
+  ![Processing](http://www.unc.edu/~epeele/file/parser_processing.png)
   
   The default setup is to append data to 'testfile.csv' 
   
